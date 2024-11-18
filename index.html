@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocMaroc - Système de Rendez-vous Médical</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #3b82f6;
+            --text: #1f2937;
+            --background: #f8fafc;
+            --card: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .hero {
+            background: linear-gradient(to right, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05));
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 1rem;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 4rem auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .hero-image {
+            animation: fadeIn 1s ease-out;
+            background: var(--card);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .features {
+            padding: 8rem 2rem;
+            background: var(--card);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            color: var(--text);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .price-section {
+            padding: 8rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .price-card {
+            background: var(--card);
+            color: var(--text);
+            padding: 3rem;
+            border-radius: 24px;
+            max-width: 500px;
+            margin: 2rem auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .price {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 1.5rem 0;
+        }
+
+        .features-list {
+            margin: 2rem 0;
+            list-style: none;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .features-list i {
+            color: var(--primary);
+        }
+
+        .contact-section {
+            padding: 8rem 2rem;
+            background: var(--background);
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <nav>
+            <a href="#" class="logo">
+                <i class="fas fa-stethoscope"></i>
+                DocMaroc
+            </a>
+            <div class="nav-links">
+                <a href="#features">Fonctionnalités</a>
+                <a href="#price">Tarifs</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>La Médecine de Demain, Aujourd'hui</h1>
+                <p>Simplifiez la gestion de vos rendez-vous médicaux avec notre plateforme moderne et intuitive. Une solution complète pour les professionnels de santé.</p>
+                <a href="#demo" class="cta-button">
+                    <i class="fas fa-play"></i>
+                    Voir la Démo
+                </a>
+            </div>
+            <div class="hero-image">
+                <img src="/api/placeholder/600/400" alt="Dashboard DocMaroc" style="width: 100%; height: auto; border-radius: 12px;">
+            </div>
+        </div>
+    </div>
+
+    <section class="features" id="features">
+        <h2 class="section-title">Fonctionnalités Avancées</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3>Gestion Intelligente</h3>
+                <p>Algorithme optimisé pour une gestion efficace des rendez-vous et une réduction des temps d'attente.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>100% Responsive</h3>
+                <p>Interface adaptative pour une expérience optimale sur tous les appareils.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Analyses Détaillées</h3>
+                <p>Tableaux de bord et rapports personnalisés pour suivre votre activité.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="price-section" id="price">
+        <h2 class="section-title" style="color: white;">Une Offre Simple et Transparente</h2>
+        <div class="price-card">
+            <h3>Forfait Premium</h3>
+            <div class="price">999 DH</div>
+            <p>par mois</p>
+            <ul class="features-list">
+                <li><i class="fas fa-check-circle"></i> Domaine .ma personnalisé</li>
+                <li><i class="fas fa-check-circle"></i> Agenda illimité</li>
+                <li><i class="fas fa-check-circle"></i> Support prioritaire 24/7</li>
+                <li><i class="fas fa-check-circle"></i> Statistiques avancées</li>
+                <li><i class="fas fa-check-circle"></i> Démo gratuite</li>
+            </ul>
+            <a href="#contact" class="cta-button" style="width: 100%; justify-content: center;">
+                Démarrer Gratuitement
+            </a>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <h2 class="section-title">Contactez-nous</h2>
+        <div class="contact-container">
+            <div class="alert alert-success" id="successAlert">
+                Message envoyé avec succès! Nous vous contacterons bientôt.
+            </div>
+            <div class="alert alert-error" id="errorAlert">
+                Une erreur s'est produite. Veuillez réessayer plus tard.
+            </div>
+            <form id="contactForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Nom Complet</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Envoyer le Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: left; margin-bottom: 3rem;">
+                <div>
+                    <h3 style="margin-bottom: 1rem;">À Propos</h3>
+                    <p>DocMaroc est la solution leader pour la gestion des rendez-vous médicaux au Maroc. Notre mission est de simplifier la vie des professionnels de santé.</p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Contact</h3>
+                    <p>Email: contact@docmaroc.ma</p>
+                    <p>Tél: +212 610781949</p>
+                    <p>Adresse: Casablanca, Maroc</p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Liens Rapides</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#features" style="color: white; text-decoration: none;">Fonctionnalités</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#price" style="color: white; text-decoration: none;">Tarifs</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#contact" style="color: white; text-decoration: none;">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem;">
+                <p>&copy; 2024 DocMaroc. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        async function sendTelegramNotification(message) {
+            const BOT_TOKEN = '7679220743:AAGnwVQbimglfg1L4Xg1Pz8vE8Ct4uYrU2c';
+            const CHAT_ID = '8053070166';
+            const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+            try {
+                const response = await fetch(`${TELEGRAM_API}?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`);
+                const data = await response.json();
+                return data.ok;
+            } catch (error) {
+                console.error('Error sending Telegram notification:', error);
+                return false;
+            }
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form elements
+            const form = event.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const successAlert = document.getElementById('successAlert');
+            const errorAlert = document.getElementById('errorAlert');
+            
+            // Hide previous alerts
+            successAlert.style.display = 'none';
+            errorAlert.style.display = 'none';
+            
+            // Disable submit button during processing
+            submitButton.disabled = true;
+            
+            try {
+                // Get form data
+                const formData = {
+                    name: form.name.value,
+                    email: form.email.value,
+                    phone: form.phone.value,
+                    message: form.message.value
+                };
+                
+                // Prepare message for Telegram
+                const message = `
+📫 Nouveau message de contact:
+👤 Nom: ${formData.name}
+📧 Email: ${formData.email}
+📱 Téléphone: ${formData.phone}
+💬 Message: ${formData.message}
+🕒 Date: ${new Date().toLocaleString('fr-MA')}
+                `.trim();
+                
+                // Send notification to Telegram
+                const notificationSent = await sendTelegramNotification(message);
+                
+                if (notificationSent) {
+                    // Show success message
+                    successAlert.style.display = 'block';
+                    form.reset();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successAlert.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error('Failed to send notification');
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                // Show error message
+                errorAlert.style.display = 'block';
+                
+                // Hide error message after 5 seconds
+                setTimeout(() => {
+                    errorAlert.style.display = 'none';
+                }, 5000);
+            } finally {
+                // Re-enable submit button
+                submitButton.disabled = false;
+            }
+        }
+
+        // Optional: Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
